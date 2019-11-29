@@ -40,12 +40,18 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ChartsModule } from 'ng2-charts';
 import { MainComponent } from './main/main.component';
+import { ArtistComponent } from './artist/artist.component';
+import { AlbumComponent } from './album/album.component';
+import { SongComponent } from './song/song.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchComponent,
-    MainComponent
+    MainComponent,
+    ArtistComponent,
+    AlbumComponent,
+    SongComponent
   ],
   imports: [
     BrowserModule,

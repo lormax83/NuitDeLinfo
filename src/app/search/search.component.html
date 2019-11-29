@@ -1,3 +1,5 @@
+<mat-icon aria-hidden="false" aria-label="Example home icon"[routerLink]="['/home']">home</mat-icon>
+
 <mat-form-field class="form-field">
   <input matInput type="text" placeholder="Search" [(ngModel)]="value" (keyup)="onSubmitGet()">
   <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="onReset()">

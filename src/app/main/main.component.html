@@ -1,11 +1,35 @@
-<div class="chart">
+<div class="PieChart">
+  <canvas baseChart
+    [data]="pieChartDataNbr"
+    [labels]="pieChartLabelsNbr"
+    [chartType]="pieChartType"
+    [options]="chartOptions"
+    [plugins]="chartPlugins"
+    [colors]="chartColors"
+    [legend]="chartLegend">
+  </canvas>
+</div>
+
+<div class="PieChart">
     <canvas baseChart
       [data]="pieChartData"
       [labels]="pieChartLabels"
       [chartType]="pieChartType"
-      [options]="pieChartOptions"
-      [plugins]="pieChartPlugins"
-      [colors]="pieChartColors"
-      [legend]="pieChartLegend">
+      [options]="chartOptions"
+      [plugins]="chartPlugins"
+      [colors]="chartColors"
+      [legend]="chartLegend">
+    </canvas>
+  </div>
+  
+  <div class="BarChart">
+    <canvas baseChart
+      [datasets]="barChartData"
+      [labels]="barChartLabels"
+      [chartType]="barChartType"
+      [options]="chartOptions"
+      [plugins]="chartPlugins"
+      [colors]="chartColors"
+      [legend]="chartLegend">
     </canvas>
   </div>

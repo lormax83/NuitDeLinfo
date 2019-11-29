@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -12,7 +13,7 @@ const httpOptions = {
 export class SearchComponent implements OnInit {
   value="";
   array = [];
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, private router:Router) { }
   ngOnInit() {
     
   }
@@ -35,26 +36,27 @@ export class SearchComponent implements OnInit {
   }
 
   onSearch(element){
-    console.log(element.name);
+    this.value="";
+    this.onSubmitGet();
     if(element.albumTitle){
-      console.log("album");
       var get = this.http.get('https://wasabi.i3s.unice.fr/api/v1/album/name/:'+element.name);
     get.subscribe((data: any[])=>{
-      console.log(data);
     })
+    this.router.navigate(['/album',element.name]);
 
     }else if(element.title){
-      console.log("music");
       var get = this.http.get('https://wasabi.i3s.unice.fr/api/v1/song/name/:'+element.name);
     get.subscribe((data: any[])=>{
-      console.log(data);
     })
-    }else
-      console.log("artist")
+    this.router.navigate(['/song',element.name]);
+    }else{
+
       var get = this.http.get('https://wasabi.i3s.unice.fr/api/v1/artist/name/:'+element.name);
     get.subscribe((data: any[])=>{
-      console.log(data);
     })
+    this.router.navigate(['/artist',element.name]);
+    }
+    window.location.reload();
     }
  
 }
