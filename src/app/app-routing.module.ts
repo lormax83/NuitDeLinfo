@@ -11,8 +11,8 @@ const routes: Routes = [
  {path: '', component: MainComponent},
  {path: 'artist', component: ArtistComponent},
  {path: 'artist/:id', component: ArtistComponent},
- {path: 'album/:id', component: AlbumComponent},
- {path: 'song/:id', component: SongComponent},
+ {path: 'album/:id/:album', component: AlbumComponent},
+ {path: 'song/:id/:album/:song', component: SongComponent},
 
   
 ];
