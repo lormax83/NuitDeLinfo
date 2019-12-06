@@ -35,23 +35,19 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import { SearchComponent } from './search/search.component';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ChartsModule } from 'ng2-charts';
+import { SecretComponent } from './secret/secret.component';
+import { ErrorComponent } from './error/error.component';
 import { MainComponent } from './main/main.component';
-import { ArtistComponent } from './artist/artist.component';
-import { AlbumComponent } from './album/album.component';
-import { SongComponent } from './song/song.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SearchComponent,
+    SecretComponent,
+    ErrorComponent,
     MainComponent,
-    ArtistComponent,
-    AlbumComponent,
-    SongComponent
   ],
   imports: [
     BrowserModule,

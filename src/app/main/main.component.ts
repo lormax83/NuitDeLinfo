@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ChartType, ChartOptions, ChartDataSets  } from 'chart.js';
-import { SingleDataSet, Label } from 'ng2-charts';
-import { HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-main',
@@ -9,107 +6,42 @@ import { HttpClient} from '@angular/common/http';
   styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
-  nbrPlatinum:number;
-  nbrGold: number;
-  nbrDiamond:number;
-  nbrSongByCountry:number[]=[0,0,0,0,0,0,0,0,0,0];
-  nameContries:string[]=["","","","","","","","","","",];
-  nbArtist:number;
-  nbSong:number;
-  nbAlbum:number;
-  public chartOptions: ChartOptions = {
-    responsive: true,
-  };
-  public chartLegend = false;
-  public chartPlugins = [];
-  public chartColors = [
-    {
-      backgroundColor: ['rgb(0,0,255)', 'rgb(51, 153, 255)', 'rgb(192, 192, 192)','rgb(0,0,255)', 'rgb(51, 153, 255)', 'rgb(192, 192, 192)','rgb(0,0,255)', 'rgb(51, 153, 255)', 'rgb(192, 192, 192)','rgb(0,0,255)', 'rgb(51, 153, 255)', 'rgb(192, 192, 192)'],
-    },
-  ];
+  value='';
+  request='';
+  search=false;
+  logementSearch : any[]= [
+    {id:1,title:"CAF: Aides pour les étudiants",description:"La CAF permet aux étudiants de recevoir une aide au logement,Selon le type de logement que vous occupez, vous pouvez prétendre à deux types d'aide au logement attribuées par la CAF (APL ou ALS)",link:"http://www.caf.fr/"},
+    {id:2,title:"Studylease: Les logements étudiants dans ta ville",description:"Avec Studylease, trouvez votre logement étudiant ou votre résidence étudiante, partout en France. Recherche et réservation en ligne de logements étudiants.",link:"https://www.studylease.com/"},
+    {id:3,title:"CROUS: Logements en résidance étudiante",description:"Mon logement Crous 2019-2020. Je dépose une demande pour ... Visale la caution locative. Le service Action Logement qui connecte emploi et logement.",link:"https://trouverunlogement.lescrous.fr/"},
+    {id:4,title:"Location-Etudiant: 1er site de location étudiante",description:"Location étudiant France : Trouvez votre logement parmi des milliers d'offres réservées aux étudiants sur le 1er site immobilier étudiant - Location-etudiant.fr.",link:"https://www.location-etudiant.fr/logement-etudiant/france.html"},
+  ]
+  bourseSearch : any[]= [
+    {id:1,title:"CROUS: Bourse Etudiante",description:"DEMANDER UNE BOURSE OU UNE AIDE .... et par nul autre canal; Le paiement de vos frais de réservation pour un logement Crous s'effectue uniquement sur ...",link:"https://www.messervices.etudiant.gouv.fr/envole/"},
+    {id:2,title:"Bourse pour l'étranger",description:"Des bourses et des aides pour partir étudier à l'étranger sont proposées par les ... universitaire à l'étranger grâce, en particulier, à des échanges d'étudiants.",link:"https://www.etudiant.gouv.fr/cid135449/les-autres-bourses-et-aides-pour-etudier-a-l-etranger.html"},
+    {id:3,title:"Aide au mérite",description:"Complémentaire à la bourse sur critères sociaux, il s'agit d'une aide ... Vous ne pouvez pas bénéficier de plus de trois aides au mérite.",link:"https://www.etudiant.gouv.fr/cid97535/aide-au-merite.html"},
+    {id:4,title:"Comparatif prêt étudiant",description:"Explications sur le crédit étudiant : conditions pour en bénéficier, classement des meilleures offres, conseils pour décrocher son prêt au ...",link:"https://www.cafedupatrimoine.com/archive/article/pret-etudiant-comparatif-credit"},
+  ]
+  constructor(){
 
+  }
+  ngOnInit(){
+    this.onReset()
+  }
+  onReset(){
+    this.value ='';
+    this.search = false;
+    this.request ="";
+  }
+  onSearch(){
+    this.search=true
 
-  public pieChartLabels: Label[] = ["Platinum","Gold","Diamond" ];
-  public pieChartData: SingleDataSet = [this.nbrPlatinum, this.nbrGold, this.nbrDiamond];
-  public pieChartLabelsNbr: Label[] = ["Album","Artist","Song" ];
-  public pieChartDataNbr: SingleDataSet = [this.nbAlbum, this.nbArtist, this.nbSong];
-  public pieChartType: ChartType = 'pie';
-  
-  
-  public barChartLabels: Label[] = this.nameContries;
-  public barChartData: ChartDataSets[] = [{ data: this.nbrSongByCountry}];
-  public barChartType: ChartType = 'bar';
-
-
-
-
-  constructor(private http:HttpClient) { }
-
-  ngOnInit() {
-    this.getNbrAlbumPlatinum();
-    this.getNbrAlbumGold();
-    this.getNbrAlbumDiamond();
-    this.getNbrMusicByCountry();
-    this.getNbAlbum();
-    this.getNbArtist();
-    this.getNbSong();
+    if(this.value.indexOf("logement") != -1){
+      this.request = "logement"
+    }else if (this.value.indexOf("bourse") != -1) {
+      this.request = "bourse"
+    }else {
+      this.request ='none'
+    }
   }
 
-  getNbrAlbumPlatinum(){
-    var get = this.http.get('https://wasabi.i3s.unice.fr/search/award/Platinum');
-    get.subscribe((data: any[])=>{
-      this.nbrPlatinum = data.length;
-      this.pieChartData = [this.nbrPlatinum, this.nbrGold, this.nbrDiamond];
-    })
-  }
-
-  getNbrAlbumGold(){
-    var get = this.http.get('https://wasabi.i3s.unice.fr/search/award/Gold');
-    get.subscribe((data: any[])=>{
-      this.nbrGold = data.length;
-      this.pieChartData = [this.nbrPlatinum, this.nbrGold, this.nbrDiamond];
-    })
-  }
-
-  getNbrAlbumDiamond(){
-    var get = this.http.get('https://wasabi.i3s.unice.fr/search/award/Diamond');
-    get.subscribe((data: any[])=>{
-      this.nbrDiamond = data.length;
-      this.pieChartData = [this.nbrPlatinum, this.nbrGold, this.nbrDiamond];
-    })
-  }
-
-  getNbrMusicByCountry(){
-    var get = this.http.get('https://wasabi.i3s.unice.fr/api/v1/song/lyrics/language/popularity');
-    get.subscribe((data: any[])=>{
-      for (let i = 0; i < 10; i++) {
-        this.nameContries[i] = data[i]._id;
-        this.nbrSongByCountry[i] = data[i].sum;
-      }
-      this.barChartLabels= this.nameContries;
-      this.barChartData = [{ data: this.nbrSongByCountry}];
-    })
-  }
-
-  getNbAlbum(){
-    var get = this.http.get('https://wasabi.i3s.unice.fr/api/v1/_stats/album/count');
-    get.subscribe((data: any[])=>{
-      this.nbAlbum = data[0].value;
-      this.pieChartDataNbr = [this.nbAlbum, this.nbArtist, this.nbSong];
-    })
-  }
-  getNbSong(){
-    var get = this.http.get('https://wasabi.i3s.unice.fr/api/v1/_stats/song/count');
-    get.subscribe((data: any[])=>{
-      this.nbSong = data[0].value;
-      this.pieChartDataNbr = [this.nbAlbum, this.nbArtist, this.nbSong];
-    })
-  }
-  getNbArtist(){
-    var get = this.http.get('https://wasabi.i3s.unice.fr/api/v1/_stats/artist/count');
-    get.subscribe((data: any[])=>{
-      this.nbArtist = data[0].value;
-      this.pieChartDataNbr = [this.nbAlbum, this.nbArtist, this.nbSong];
-    })
-  }
 }

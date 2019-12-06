@@ -1,35 +1,53 @@
-<div class="PieChart">
-  <canvas baseChart
-    [data]="pieChartDataNbr"
-    [labels]="pieChartLabelsNbr"
-    [chartType]="pieChartType"
-    [options]="chartOptions"
-    [plugins]="chartPlugins"
-    [colors]="chartColors"
-    [legend]="chartLegend">
-  </canvas>
-</div>
-
-<div class="PieChart">
-    <canvas baseChart
-      [data]="pieChartData"
-      [labels]="pieChartLabels"
-      [chartType]="pieChartType"
-      [options]="chartOptions"
-      [plugins]="chartPlugins"
-      [colors]="chartColors"
-      [legend]="chartLegend">
-    </canvas>
-  </div>
-  
-  <div class="BarChart">
-    <canvas baseChart
-      [datasets]="barChartData"
-      [labels]="barChartLabels"
-      [chartType]="barChartType"
-      [options]="chartOptions"
-      [plugins]="chartPlugins"
-      [colors]="chartColors"
-      [legend]="chartLegend">
-    </canvas>
-  </div>
+<div>
+        <a href=""><img *ngIf="!search" class="center" src="../assets/img/logo.png" width="450px" height="300px"></a>
+        <div *ngIf="search" style="display: flex">
+          <a href=""><img src="../assets/img/logo.png" width="100px" height="70px" (click)="onReset()"></a>
+          <mat-form-field  class="center">
+              <input matInput type="text" placeholder="Search" [(ngModel)]="value"(keyup.enter)="onSearch()">
+              <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="onReset()">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+            
+        </div>
+        <div *ngIf="!search" class="center">
+          <mat-form-field class="input">
+          <input matInput type="text" placeholder="Search" [(ngModel)]="value"(keyup.enter)="onSearch()">
+          <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="onReset()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+        
+        <mat-chip-list aria-label="Fish selection" class="center">
+          <mat-chip (click)="value='logement'; onSearch()">Logement</mat-chip>
+          <mat-chip (click)="value='bourse'; onSearch()">Bourse</mat-chip>
+          <mat-chip (click)="value='santé'; onSearch()">Santé</mat-chip>
+          <mat-chip (click)="value='transport'; onSearch()">Transport</mat-chip>
+          <mat-chip (click)="value='association'; onSearch()">Association</mat-chip>
+        </mat-chip-list>
+      </div>
+        <div *ngIf="search">
+    
+          <div *ngIf="request =='logement'">
+            <div *ngFor="let element of logementSearch">
+               <a href="{{element.link}}"><h2>{{element.title}}</h2></a>
+              <p>{{element.description}}</p>
+            </div>
+          </div>
+    
+          <div *ngIf="request =='bourse'">
+              <div *ngFor="let element of bourseSearch">
+                 <a href="{{element.link}}"><h2>{{element.title}}</h2></a>
+                <p>{{element.description}}</p>
+              </div>
+            </div>
+    
+            <div *ngIf="request =='none'">
+               <h3>Aucuns résultats trouvés</h3>
+               <button mat-raised-button (click)="onReset()">Retour à la recherche</button>
+              </div>
+    
+    
+        </div>
+    
+    </div>
